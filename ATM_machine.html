@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM_MACHINE</title>
+    <!--No mundo do desenvolvimento o pensamento crítico é a parte mais importante. Com um pensamento apurado, você consegue fazer melhores perguntas, ser mais assertivo nas ações e no desenvolvimento. 
+
+Exatamente por isso, mantenha muita atenção no que é solicitado abaixo. Pense com cuidado, planeje e execute. 
+Dessa vez, você estão alterando um código pronto e aplicando sua visão. 
+Mantenha na cabeça que qualquer alteração não vai quebrar o mundo... Então experimente tudo o que quiser experimentar. Brinque bastante e altere tudo o que quiser alterar. 
+
+Com o projeto de desenvolvimento de caixa eletrônico, por exemplo, encontramos algumas questões que são muito importantes, mas não foram aplicadas. Vamos aplicá-las uma a uma. 
+- Sempre que o usuário for acessar o saldo, sacar dinheiro, retirar o extrato é necessário que ele informe uma senha. Essa senha deve validada com uma condicional. A senha é 3589. -->
+
+
+<script>
+	var saldo = 100.0;
+
+//- Ao acessar o sistema, pergunte o nome do usuário e diga "Olá {Nome} é um prazer ter você por aqui!".
+//- Atualize a função "erro" com as novas opções do menu.
+//- Na função "inicio", utilize escolha/caso (switch/case) para validar a opção do usuário.
+//- A ordem das opções deve ser: Saldo, Extrato, Saque, Depósito, Transferência e Sair.
+    function inicio() {
+		var nome = prompt("Digite seu nome:")
+
+		var operação = parseInt(prompt("Ola " + nome + ", é um prazer ter você por aqui! "+ "Selecione uma opção 1.) Saldo 2.) Extrato 3.) Saque 4.) Depósito 5.)Transferência 6.) Sair"));
+
+		switch (operação) {
+		case 1:
+			ver_saldo();
+			
+		case 2:
+			ver_extrato();
+			
+		case 3:
+			fazer_saque();
+			
+		case 4:
+			fazer_deposito();
+			
+		case 5:
+			fazer_transferencia();
+			
+		case 6:
+			sair();
+
+		default:
+			erro();	
+		}
+	}
+
+
+
+	function ver_saldo(){
+		var senha= prompt("insira sua senha");
+		if (senha = 3589){
+			alert("Seu saldo atual é de R$"+saldo);
+		}
+		else {
+			alert("Senha incorreta");
+			ver_saldo();
+		} inicio();
+	}
+
+//- Adicionar a opção para ver o extrato (Coloque algumas compras ou depósitos fictícios). 
+
+	function ver_extrato() {
+			var senha= prompt("insira sua senha");
+		if (senha = 3589){
+			alert("Pagamento efetuado: SABESP SP R$122,17/ Transferência enviada: Claudia Pascal R$10,00/ Transferência recebida: Demerge Brasil Facilitadora de Pagamentos R$1,50");
+		}
+		else {
+			alert("Senha incorreta");
+			ver_extrato();
+		}
+	}
+
+
+//- Sempre que o usuário for sacar dinheiro, o valor a ser sacado não pode ser igual ou menor a zero. Exiba uma mensagem de "Operação não autorizada". 
+//- Sempre que o usuário for sacar dinheiro, o valor restante não pode ser negativo, ou seja, caso o usuário tente sacar mais do que tem em saldo, a ação não deve ocorrer. Exiba uma mensagem de "Operação não autorizada". 
+	function fazer_saque() {
+		var saque = parseFloat(prompt('Qual o valor para saque?'));
+			if (0 > saque > saldo) {
+				alert("Operação não autorizada, tente um valor até: " + saldo);
+					
+			}
+			else {
+				var senha= prompt("insira sua senha");
+				if (senha == 3589){
+				saldo -= saque;
+						ver_saldo();
+				}else {
+					alert("Operação não autorizada. Senha incorreta");fazer_saque();
+				}
+			}
+		}
+
+
+//- Caso o usuário informe um valor para depósito igual ou menor que zero, não deixe a operação ocorrer. Exiba uma mensagem de "Operação não autorizada".
+	function fazer_deposito(){
+		var deposito = parseFloat(prompt('Qual o valor para depósito?'));
+			if (isNaN(deposito) || deposito === '') {
+				alert('Por favor, informe um número:');
+				fazer_deposito();
+			} else {
+				saldo += deposito;
+				ver_saldo();
+			}
+			if (deposito <= 0) {
+				alert("Operação não autorizada");
+				fazer_deposito();
+			}
+	}
+
+//- Adicionar a opção para fazer uma transferência. A transferência consiste em você informar o número de uma conta (pode ser qualquer número, mas obrigatoriamente um número, ou seja, nenhum outro caractere deve ser aceito), perguntar o valor da transferência e remover o valor da conta da mesma forma como na ação do saldo. Caso o usuário tente transferir mais do que tem em saldo, a ação não deve ocorrer. Exiba uma mensagem de "Operação não autorizada". 
+//- Sempre que o usuário for transferir dinheiro,  o valor a ser transferido não pode ser igual ou menor a zero., ou seja, caso o usuário tente transferir mais do que tem em saldo, a ação não deve ocorrer. Exiba uma mensagem de "Operação não autorizada". 
+	function fazer_transferencia(){
+		var numconta = prompt("Insira a conta: ")
+			if (isNaN(numconta) || numconta === '') {
+				alert('Por favor, informe um número:');
+				fazer_transferencia();
+			}
+
+			var valortrans = prompt("Insira o valor da transferência: ")
+			valortrans -= saldo;
+			alert("Transferencia realizada com sucesso!, saldo atual: " + saldo)
+			inicio();
+
+			if (valortrans > saldo) {
+				alert("Operação não autorizada")
+				fazer_transferencia();
+			}
+
+			if (valortrans <= 0) {
+				alert("Operação não autorizada")
+				fazer_transferencia();
+			}
+
+	}
+//- Quando o usuário escolher sair do sistema, exiba uma mensagem agradecendo por utilizar os serviços do banco :"{Nome}, foi um prazer ter você por aqui!".
+	function sair(){
+		var confirma = confirm('Você deseja sair?');
+			if (confirma) {
+				alert(nome + ", foi um prazer ter você por aqui!")
+				window.close();
+			} else {
+				inicio();
+			}
+	}
+	
+	function erro(){
+		alert('Por favor, informe um número entre 1 e 6');
+			inicio();
+	}
+</script>
+</head>
+</html>
